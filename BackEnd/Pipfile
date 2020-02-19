@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+flask-socketio = "*"
+python-dotenv = "*"
+setuptools = "*"
+flask-pymongo = "*"
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+dev = "flask run --host=10.50.1.66"

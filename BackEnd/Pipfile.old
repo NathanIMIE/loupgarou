@@ -1,0 +1,17 @@
+[[source]]
+name = "loupgarou"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+flask-socketio = "*"
+socketio = "*"
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+dev = "flask run --host=0.0.0.0"

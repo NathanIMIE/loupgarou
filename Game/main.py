@@ -1,6 +1,5 @@
 import pygame as pg
 
-
 pg.init()
 screen = pg.display.set_mode((400, 400))
 COLOR_INACTIVE = pg.Color('lightskyblue3')
@@ -41,6 +40,7 @@ class InputBox:
             if self.active:
                 if event.key == pg.K_RETURN:
                     print(self.text)
+                    sio.emit("messageSend",{"text":self.text})
                     self.text = ''
                 elif event.key == pg.K_BACKSPACE:
                     self.text = self.text[:-1]
