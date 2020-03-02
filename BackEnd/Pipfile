@@ -11,6 +11,7 @@ flask-socketio = "*"
 python-dotenv = "*"
 setuptools = "*"
 flask-pymongo = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
