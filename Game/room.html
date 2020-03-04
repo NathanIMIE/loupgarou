@@ -4,6 +4,28 @@
 	<title></title>
 </head>
 <body>
-	<p>bite</p>
+	<div id="Content">
+		<div id="InfoRole">
+			<img src="">
+			<h6></h6>
+			<p></p>			
+		</div>
+		<div id="Chat">
+			<div class="general">
+				
+			</div>
+		</div>
+		<div id="Decision">
+			<form>
+
+			</form>
+		</div>
+	</div>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		var io = io('http://192.168.43.9:5000');
+		io.emit("informations")
+	</script>
 </body>
 </html>
