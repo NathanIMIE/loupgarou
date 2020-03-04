@@ -3,7 +3,7 @@ import socketio
 
 pg.init()
 sio = socketio.Client()
-screen = pg.display.set_mode((800, 400))
+screen = pg.display.set_mode((800, 700))
 COLOR_INACTIVE = (0,0,0)
 COLOR_ACTIVE = (0,0,0)
 FONT = pg.font.Font(None, 32)
@@ -16,12 +16,6 @@ blue = (0,0,128)
 text = FONT.render('Nom du joueur', True, black) 
 textRect = text.get_rect()
 textRect.center = (200, 25)
-text3 = FONT.render('Nom de la room', True, black) 
-textRect3 = text3.get_rect()
-textRect3.center = (200, 125)
-text4 = FONT.render('Mot de passe', True, black) 
-textRect4 = text4.get_rect()
-textRect4.center = (200, 225)
 text5 = FONT.render('Pseudo des joueurs présents', True, black) 
 textRect5 = text5.get_rect()
 textRect5 = (400, 12)
@@ -33,34 +27,47 @@ class Listing:
         self.listing = listing
         self.txt_surfaces = []
         for pseudo in self.listing:
-            print(pseudo)
-            self.txt_surfaces.append(FONT.render(pseudo, True, green))
+            if pseudo == '':
+                self.txt_surfaces.append(FONT.render('En attente', True, red))
+            else:
+                self.txt_surfaces.append(FONT.render(pseudo, True, green))
 
     def draw(self, screen):
         y = self.rect.y + 5
         for txt_surface in self.txt_surfaces:
             screen.blit(txt_surface, (self.rect.x, y))
             y += 50
-        pg.draw.rect(screen, self.bgColor, self.rect, 2)
+        self.rect.h = y - 50
+        pg.draw.rect(screen, white, self.rect, 1)
+    def reset(self, screen):
+        self.rect.h = len(self.listing) * 50
+        pg.draw.rect(screen, white, self.rect)
 
+class Etat:
+    def __init__(self):
+        self.liste = ''
+
+etat = Etat()
 @sio.on('listeJoueurs')
 def listeJoueurs(data):
-    listing = data
-    test = Listing(400,50,100,50,listing)
-    test.draw(screen)
+    listing = data[0]
+    firstTime = data[1]
+    if firstTime == 0:
+        etat.liste.reset(screen)
+    DataServ = Listing(400,50,300,50,listing)
+    DataServ.draw(screen)
+    etat.liste = DataServ
 
 class SubmitButton:
-    def __init__(self, x, y, w, h,state, text=''):
+    def __init__(self, x, y, w, h, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.bgColor = green
         self.text = text
         self.txt_surface = FONT.render('GO !', True, green)
-        self.state = state
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
-                print(self.state.pseudo)
                 sio.emit("chooseName",{"pseudo":self.state.pseudo})
 
     def update(self):
@@ -69,6 +76,20 @@ class SubmitButton:
     def draw(self, screen):
         screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
         pg.draw.rect(screen, self.bgColor, self.rect, 2)
+
+    def reset(self,screen):
+        pg.draw.rect(screen, white, self.rect)
+
+bouton = SubmitButton(100, 325, 200, 50)
+@sio.on('goGame')
+def GameStart(data):
+    donnees = data
+    print(donnees)
+    if donnees == 1:
+        bouton.draw(screen)
+    else :
+        bouton.reset(screen)
+    
 
 class InputBox:
     def __init__(self, x, y, w, h, id, state, text=''):
@@ -95,8 +116,6 @@ class InputBox:
         if event.type == pg.KEYDOWN:
             if self.active:
                 if event.key == pg.K_RETURN:
-                    print(self.text)
-                    print(self.state.pseudo)
                     sio.emit("chooseName",{"pseudo":self.state.pseudo})
                 elif event.key == pg.K_BACKSPACE:
                     self.text = self.text[:-1]
@@ -127,8 +146,7 @@ class infoInput:
         self.mdp = ''    
 
 def main():
-    
-    sio.connect('http://10.50.1.66:5000')
+    sio.connect('http://192.168.43.9:5000')
     clock = pg.time.Clock()
     state = infoInput()
     input_box1 = InputBox(100, 50, 200, 32, 'pseudo', state)
@@ -136,9 +154,8 @@ def main():
     #input_box3 = InputBox(100, 250, 200, 32, 'mdp', state)
     input_boxes = [input_box1]
     #, input_box2, input_box3
-    submit = SubmitButton(100, 325, 200, 50, state)
-    boxes = input_boxes + [submit]
-    done = False 
+    boxes = input_boxes
+    done = False
 
     screen.fill((255,255,255))
     screen.blit(text, textRect)

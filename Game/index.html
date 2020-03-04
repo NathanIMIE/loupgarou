@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Le pear LOUP-GAROU</title>
+</head>
+<body>
+	<div id="Content">
+		<div>
+			<form id="form">
+				<input type="text" name="ChooseName" id="chooseName">
+				<input type="submit" name="Envoi" value="Envoyer">
+			</form>
+		</div>
+		<div id="listing"></div>
+		<button id="startGame" style="display: none">Commencer la partie</button>
+	</div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf-8">
+	    var io = io('http://192.168.43.9:5000');
+	    io.on('gameStarted', function(data) {
+	    	$('#Content').hide()
+	    	$('<p>La partie est déjà lancé.</p>').insertAfter('#Content')
+	    });
+	    io.on('listeJoueurs', function(data) {
+	    	var listing = data[0]
+	    	$('#listing').html('')
+	    	for (var i = listing.length - 1; i >= 0; i--) {
+	    		if (listing[i] == "") {
+	    			$('#listing').append('<p class="wait">En attente</p>')
+	    		}
+	    		else {
+	    			$('#listing').append('<p class="pseudo">'+listing[i]+'</p>')
+	    		}
+	    	}
+	    });
+	    io.on('goGame', function(data) {
+	    	var startGame = data
+	    	if (startGame == 1) {
+    			$('#startGame').show()
+	    	}
+	    	else {
+    			$('#startGame').hide()
+	    	}
+	    });
+	    io.on('zeParti', function(data) {
+	    	window.location.href = window.location.href.split('index.html')[0]+'room.html'
+	    })
+		$('#form').submit(function(){
+			io.emit("chooseName",{"pseudo":$('#chooseName').val()})
+			return false;
+		});
+		$('#startGame').on('click', function(){
+			io.emit("startGame")
+			return false;
+		})
+	</script>
+</body>
+</html>
