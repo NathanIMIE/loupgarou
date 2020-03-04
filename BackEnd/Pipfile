@@ -12,9 +12,10 @@ python-dotenv = "*"
 setuptools = "*"
 flask-pymongo = "*"
 requests = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
-dev = "flask run --host=10.50.1.66"
+dev = "flask run --no-reload --host=192.168.43.9"
