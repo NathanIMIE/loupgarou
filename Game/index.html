@@ -2,32 +2,34 @@
 <html>
 <head>
 	<title>Le pear LOUP-GAROU</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css"></link>
 </head>
 <body>
 	<div id="Content">
-		<div>
-			<form id="form">
-				<input type="text" name="ChooseName" id="chooseName">
-				<input type="submit" name="Envoi" value="Envoyer">
-			</form>
-		</div>
+		<form id="form">
+			<label for="usr">Renseigner votre pseudo :</label>
+			<input type="text" name="ChooseName" id="chooseName" class="form-control">
+			<input type="submit" name="Envoi" value="Envoyer" class="btn btn-primary envoiName">
+		</form>
 		<div id="listing"></div>
-		<button id="startGame" style="display: none">Commencer la partie</button>
+		<button class="btn btn-primary" id="startGame" style="display: none">Commencer la partie</button>
 	</div>
 	<div id="Room" style="display: none">
-		<div id="InfoRole">
+		<div id="InfoRole" class="flleft">
 			<img src="">
+			<h5></h5>
 			<h6></h6>
 			<p></p>			
 		</div>
-		<div id="Chat">
+		<div id="Chat" class="flleft">
 			<div id="Contenu"></div>
 			<form id="general">
-				<textarea rows="2" cols="50" id="textarea" disabled="disabled"></textarea>
-				<input type="submit" name="Chat" value="envoyer" disabled="disabled">
+				<textarea rows="2" cols="50" id="textarea" disabled="disabled" class="flleft"></textarea>
+				<input type="submit" name="Chat" value="Envoyer" disabled="disabled" class="flleft">
 			</form>
 		</div>
-		<div id="Decision">
+		<div id="Decision" class="flleft">
 			<form id="CUPI">
 				<label>Premier amoureux</label>
 				<select id="selectFirst"></select>
@@ -38,17 +40,41 @@
 			<form id="GARDE">
 				<label>Qui choisis-tu de protéger cette nuit ?</label>
 				<select id="gardeSelect"></select>
-				<input type="submit" name="Protéger">
+				<input type="submit" name="RespGARD" value="PROTÉGER">
 			</form>
 			<form id="LG">
 				<label>Qui veux-tu manger cette nuit ?</label>
 				<select id="lgSelect"></select>
-				<input type="submit" name="RespLG">
+				<input type="submit" name="RespLG" value="MANGER">
+			</form>
+			<form id="SORC">
+				<fieldset id="RES">
+					<label id="resMort">Souhaites-tu sauver cette personne : <span></span></label>
+					<input type="radio" name="res" value="oui" id="sorcRadio"><span>OUI</span>
+					<input type="radio" name="res" value="non" id="sorcRadio"><span>NON</span>
+				</fieldset>
+				<fieldset id="MORT">
+					<label>Choisis la personne que tu veux tuer :</label>
+					<select id="sorcSelect_Mort"></select>
+				</fieldset>
+				<input type="submit" name="RespSORC" value="ABRACADABRA">	
+			</form>
+			<form id="VOY">
+				<label>Le rôle de quelle personne souhaites tu regarder ?</label>
+				<select id="voySelect"></select>
+				<input type="submit" name="RespVOY" value="REGARDER">
+			</form>
+			<form id="CHASS">
+				<label>Tu as été tué injustement ! Choisis celui que tu emporteras avec toi dans la tombe !</label>
+				<select id="chassSelect"></select>
+				<input type="submit" name="RespVOY" value="EXÉCUTER">
 			</form>
 		</div>
 	</div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	<script type="text/javascript" charset="utf-8">
 	    var io = io('http://192.168.43.9:5000');
 	    io.on('gameStarted', function(data) {
@@ -60,10 +86,10 @@
 	    	$('#listing').html('')
 	    	for (var i = listing.length - 1; i >= 0; i--) {
 	    		if (listing[i] == "") {
-	    			$('#listing').append('<p class="wait">En attente</p>')
+	    			$('#listing').append('<p class="alert alert-danger">En attente</p>')
 	    		}
 	    		else {
-	    			$('#listing').append('<p class="pseudo">'+listing[i]+'</p>')
+	    			$('#listing').append('<p class="pseudo alert alert-success">'+listing[i]+'</p>')
 	    		}
 	    	}
 	    });
@@ -82,54 +108,79 @@
 	    	io.emit("informations")
 	    })
 	    io.on('role', function(data) {
-	    	test = data
-	    	if (test == 'lg') {
-	    		$('#general').addClass(''+test+'')
+	    	playerPseudo = data[0]
+	    	playerRole = data[1]
+	    	if (playerRole == 'lg') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
 	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/lg.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html('Tu es un <b>Loup-Garou</b>')
 	    		$('#InfoRole p').text("Ils se réveillent chaque nuit pour éliminer un villageois. Le jour, ils participent aux débats en essayant de ne pas faire découvrir leur activité nocturne. Ils ont le droit de voter comme tous les autres joueurs (car personne ne sait qui ils sont), et éventuellement contre un des leurs par nécessité. Leur but est de tuer tous les autres villageois.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
-	    	if (test == 'sorc') {
-	    		$('#general').addClass(''+test+'')
+	    	if (playerRole == 'sorc') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
 	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/sorc.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html('Tu es la <b>Sorcière</b>')
 	    		$('#InfoRole p').text("Elle possède deux potions : une de guérison et une d'empoisonnement. Elle ne peut utiliser chacune de ses potions qu'une seule fois au cours de la partie. Durant la nuit, lorsque les loups-garous se sont rendormis, le meneur de jeu va appeler la sorcière et va lui montrer la personne tuée par les loups-garous. La sorcière a trois possibilités : ne rien faire / ressusciter la personne tuée — et donc perdre sa seule potion de guérison / tuer une autre personne en plus de la victime — et donc perdre sa seule potion d'empoisonnement. La sorcière peut utiliser ses deux potions durant la même nuit si elle le souhaite.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
-	    	if (test == 'chass') {
-	    		$('#general').addClass(''+test+'')
+	    	if (playerRole == 'chass') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
 	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/chass.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html('Tu es le <b>Chasseur</b>')
 	    		$('#InfoRole p').text("Le chasseur n'a aucun rôle particulier à jouer tant qu'il est vivant. Mais dès qu'il meurt – qu'il soit tué dans la nuit (Loups-garous, sorcière), à la suite d'une décision des villageois ou par la mort de son amoureux — il doit désigner une personne qui mourra également, sur-le-champ, d'une balle de son fusil.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
-	    	if (test == 'vill') {
-	    		$('#general').addClass(''+test+'')
+	    	if (playerRole == 'vill') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
 	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/vill.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html('Tu es un <b>Villageois</b>')
 	    		$('#InfoRole p').text("Ils sont armés de leur force de persuasion et de leur perspicacité. Ils ont la possibilité de voter pour éliminer un joueur et d'être le Capitaine du village qui a deux voix. C'est un rôle qui peut rebuter les enfants ou les personnes qui ne connaissent pas le jeu, mais le simple villageois peut bluffer ou prendre des risques pour tuer un loup en relative quiétude pour son village.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
-	    	if (test == 'voy') {
-	    		$('#general').addClass(''+test+'')
+	    	if (playerRole == 'voy') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
 	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/voy.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html('Tu es la <b>Voyante</b>')
 	    		$('#InfoRole p').text("Au début de chaque nuit, elle est appelée par le meneur et peut désigner une personne dont elle découvrira secrètement l'identité. Le meneur de jeu lui montrera alors la carte d'identité de la personne qu'elle a désignée, elle connaît alors avec certitude le rôle de cette personne. Si vous êtes vous-même la voyante, ne vous dévoilez pas trop vite sous peine de vous faire tuer au cours de la prochaine nuit par les loups-garous.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
-	    	if (test == 'cupi') {
-	    		$('#general').addClass(''+test+'')
+	    	if (playerRole == 'cupi') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
 	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/cupi.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html('Tu es le <b>Cupidon</b>')
 	    		$('#InfoRole p').text("Durant la nuit du premier tour de la partie (tour préliminaire), il va désigner deux personnes qui seront amoureuses jusqu'à la fin du jeu. Il peut choisir n’importe quels joueurs, y compris se désigner lui-même. Si l'une des deux personnes vient à mourir, l'autre meurt immédiatement de désespoir. Si l'un des amoureux est villageois et l'autre loup-garou, leur seul moyen de gagner est d'éliminer tous les autres (loups-garous et villageois). Dans ce cas-là uniquement, ils forment une équipe de deux, seuls contre tous. Mais dans la variante « Fête des moissons » de l'extension « Nouvelle Lune », le meneur du jeu rappelle cupidon après les amoureux. Il doit alors choisir l’un des amoureux et désigner un troisième joueur, qui sera son amant.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
-	    	if (test == 'gard') {
-	    		$('#general').addClass(''+test+'')
-	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/garde.png')
+	    	if (playerRole == 'gard') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
+	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/gard.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html('Tu es le <b>Garde</b>')
 	    		$('#InfoRole p').text("Le salvateur se réveille chaque nuit avant les loups-garous, et désigne au meneur de jeu un joueur qu'il protégera. Si ce joueur est la victime désignée par les loups-garous cette nuit, il survit à leur assaut. Il ne peut pas protéger la même personne deux tours de suite, mais il peut se protéger lui-même. La protection du Salvateur n'a aucune efficacité sur la victime de la sorcière et ne peut empêcher un amoureux de mourir de chagrin. S'il sauve la personne dévorée par les loups, la sorcière ne connaît pas la victime. C'est donc un rôle qui doit aller de pair avec la sorcière pour un maximum d'efficacité.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
-	    	if (test == 'ange') {
-	    		$('#general').addClass(''+test+'')
+	    	if (playerRole == 'ange') {
+	    		$('#general').addClass(''+playerRole+'')
+	    		$('#Chat #Contenu').addClass(''+playerRole+'')
 	    		$('#InfoRole img').attr('src', ''+window.location.href.split('index.html')[0]+'img/ange.png')
+	    		$('#InfoRole h5').html('Bienvenue dans le village : <b>'+playerPseudo+'</b>')
 	    		$('#InfoRole h6').html("Tu es l'<b>Ange</b>")
 	    		$('#InfoRole p').text("Le but de l'ange est de se faire éliminer dès le premier vote. S'il réussit, la partie se termine et il a gagné. Dans le cas contraire, le jeu continue mais l'ange devient un simple villageois sans pouvoir. Cela permet de rendre plus intéressant le premier vote en mettant fin à l'habitude qu'ont certains joueurs à vouloir éliminer les moins bons dès le début. Grâce à ce personnage, les joueurs vont devoir choisir le premier lynché avec plus de parcimonie, de peur de perdre en condamnant l'ange.")
+	    		$('#Decision').addClass(''+playerRole+'')
 	    	}
 	    })
 		$('#form').submit(function(){
@@ -140,23 +191,19 @@
 			io.emit("startGame")
 			return false;
 		})
-		/*var nuit = true
-		if (nuit == true) {
-			
-		}
-		if (nuit == false) {
-			$('#general').find('textarea').removeAttr('disabled')
-			$('#general').find('input').removeAttr('disabled')
-		}*/
+		/*
+		$('#general').find('textarea').removeAttr('disabled')
+		$('#general').find('input').removeAttr('disabled')
+		*/
+		var nuit = true;
 		$('#general').submit(function(){
 			if (nuit == false) {
 				io.emit("Chat",$('#textarea').val())
-				return false;
 			}
 			else {
 				io.emit("ChatLG",$('#textarea').val())
-				return false;
 			}
+			return false;
 		});
 	    io.on('nouveauMessage', function(data) {
 	    	var auteur = data[0]
@@ -212,6 +259,50 @@
 		$('#LG').submit(function(){
 			if ($('#lgSelect option:selected')) {
 				io.emit("RespLG",$('#lgSelect option:selected').attr('data-lg'))
+			}
+			return false;
+		});
+	    io.on('SORC', function(data) {
+	    	$('#general.lg textarea').attr('disabled','disabled')
+			$('#general.lg input').attr('disabled','disabled')
+	    	var sorc = data[0]
+	    	var pseudo = data[1]
+	    	var res = data[2]
+	    	var mort = data[3]
+	    	console.log(sorc)
+	    	if (res == 0) {
+	    		$('#resMort span').text(pseudo)
+	    	}
+	    	if (res == 1) {
+	    		$('#RES').hide()
+	    		$('#RES #sorcRadio[value="non"]').attr('checked','checked')
+	    	}
+	    	if (mort == 0) {
+	    		$('#sorcSelect_Mort').append('<option data-sorc-mort="" data-none="personne">Personne</option>')
+		    	for (var i = sorc.length - 1; i >= 0; i--) {
+		    		$('#sorcSelect_Mort').append('<option data-sorc-mort="'+sorc[i]+'">'+sorc[i]+'</option>')
+		    	}
+	    	}
+	    	if (mort == 1) {
+	    		$('#MORT').hide()
+	    		$('#MORT #sorcSelect_Mort option[data-none="personne"]').attr('selected','selected')
+	    	}
+	    })
+		$('#SORC').submit(function(){
+			if ($('#sorcRadio:checked') && $('#sorcSelect_Mort option:selected')) {
+				io.emit("RespSORC",[$('#sorcRadio:checked').attr('value'),$('#sorcSelect_Mort option:selected').attr('data-sorc-mort')])
+			}
+			return false;
+		});
+	    io.on('VOY', function(data) {
+	    	var voy = data
+	    	for (var i = voy.length - 1; i >= 0; i--) {
+	    		$('#voySelect').append('<option data-voy="'+voy[i]+'">'+voy[i]+'</option>')
+	    	}
+	    })
+		$('#VOY').submit(function(){
+			if ($('#voySelect option:selected')) {
+				io.emit("RespVOY",$('#voySelect option:selected').attr('data-voy'))
 			}
 			return false;
 		});

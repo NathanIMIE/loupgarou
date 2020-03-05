@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+h5,h6,p,label {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.3em;
+    color: #000;
+}
+#Content {
+    width: 500px;
+    margin: 0 auto;
+}
+.envoiName {
+	margin-top: 10px;
+}
+#listing {
+	margin-top: 10px;
+}
+.alert{
+    text-align: center;
+}
+.flleft{
+    float: left;
+    display: inline-block;
+    padding: 10px;
+}
+#InfoRole,#Decision{
+    width: 25%;
+}
+#Chat{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+}
+#Chat #Contenu .messageLG {
+	display: none;
+}
+#Chat #Contenu.lg .messageLG {
+	display: block;
+}
+#InfoRole {
+    height: 100vh;
+    border-right: 1px solid #000;
+    display: block;
+}
+#InfoRole img {
+    width: 200px;
+    margin: 0 auto 15px;
+    display: block;
+}
+#InfoRole h5 {
+    font-size: 18px;
+}
+#InfoRole h6 {
+    font-size: 16px;
+}
+#InfoRole p {
+    font-size: 12px;
+}
+#Chat textarea {
+    width: 75%;
+    max-height: 100px;
+    height: 100px;
+    min-height: 100px;
+}
+#Chat input[type="submit"] {
+    width: 20%;
+    padding: 0;
+    height: 30px;
+    margin: 70px 0 0 10px;
+}
+#Chat form#general {
+    height: 100px;
+}
+#Chat #Contenu {
+    height: calc(100% - 100px);
+    display: block;
+    overflow-y: scroll;
+}
+#Chat p {
+    font-size: 12px;
+}
+#Decision {
+    height: 100vh;
+    border-left: 1px solid #000;
+    display: block;    
+}
+#Decision.lg #CUPI,
+#Decision.lg #GARDE,
+#Decision.lg #SORC,
+#Decision.lg #VOY,
+#Decision.lg #CHASS,
+#Decision.sorc #CUPI,
+#Decision.sorc #GARDE,
+#Decision.sorc #LG,
+#Decision.sorc #VOY,
+#Decision.sorc #CHASS,
+#Decision.chass #CUPI,
+#Decision.chass #GARDE,
+#Decision.chass #LG,
+#Decision.chass #SORC,
+#Decision.chass #VOY,
+#Decision.vill #CUPI,
+#Decision.vill #GARDE,
+#Decision.vill #LG,
+#Decision.vill #SORC,
+#Decision.vill #VOY,
+#Decision.vill #CHASS,
+#Decision.voy #CUPI,
+#Decision.voy #GARDE,
+#Decision.voy #LG,
+#Decision.voy #SORC,
+#Decision.voy #CHASS,
+#Decision.cupi #GARDE,
+#Decision.cupi #LG,
+#Decision.cupi #SORC,
+#Decision.cupi #CHASS,
+#Decision.cupi #VOY,
+#Decision.gard #CUPI,
+#Decision.gard #LG,
+#Decision.gard #SORC,
+#Decision.gard #CHASS,
+#Decision.gard #VOY,
+#Decision.ange #GARDE,
+#Decision.ange #CUPI,
+#Decision.ange #LG,
+#Decision.ange #SORC,
+#Decision.ange #CHASS,
+#Decision.ange #VOY {
+    display: none!important;
+}
