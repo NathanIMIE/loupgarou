@@ -6,13 +6,25 @@ h5,h6,p,label {
 }
 #Content {
     width: 500px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 .envoiName {
-	margin-top: 10px;
+    margin-top: 10px;
+    width: 150px;
+    display: block;
+    margin: 10px auto;
 }
 #listing {
 	margin-top: 10px;
+}
+#listing > p {
+    padding: 5px;
+}
+#startGame {
+    display: none;
+    margin-top: 10px;
+    width: 350px;
+    margin: 10px auto;
 }
 .alert{
     text-align: center;
@@ -85,6 +97,15 @@ h5,h6,p,label {
     border-left: 1px solid #000;
     display: block;    
 }
+#Decision #CUPI,
+#Decision #GARDE,
+#Decision #SORC,
+#Decision #VOY,
+#Decision #CHASS,
+#Decision #LG,
+#Decision #JOUR {
+    display: none;
+}
 #Decision.lg #CUPI,
 #Decision.lg #GARDE,
 #Decision.lg #SORC,
@@ -128,4 +149,50 @@ h5,h6,p,label {
 #Decision.ange #CHASS,
 #Decision.ange #VOY {
     display: none!important;
+}
+h4 {
+    font-size: 18px;
+    margin: 20px 0 0;
+    text-decoration: underline;
+}
+.joueursActif p {
+    font-size: 14px;
+    margin: 0 0 5px;
+}
+.joueursActif .dead {
+    text-decoration: line-through;
+}
+.joueursActif.inlove .love {
+    color: #FFC0CB;
+}
+#Decision {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.hovering {
+    display: block;
+    position: relative;
+}
+.hovering:after {
+    content: 'Regarder mon rôle';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #DCDCDC;
+    -webkit-transition: all .6s ease-in-out;
+    -moz-transition: all .6s ease-in-out;
+    -ms-transition: all .6s ease-in-out;
+    -o-transition: all .6s ease-in-out;
+    transition: all .6s ease-in-out;
+}
+.hovering:hover:after {
+    height: 0;
+    content: ''
 }
