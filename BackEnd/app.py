@@ -120,7 +120,7 @@ class Room:
             if(player.amour == 1 and player.sid != playerAmour.sid):
                 return player
         
-    def GetPlusVote(self):
+    def GetResultatVote(self):
         votePlayers = {}
         for player in self.players:
             votePlayers[player.nombreVote] = player.pseudo
@@ -197,7 +197,8 @@ def Tour():
             players = room.GetPlayersByRole('sorc')
             for player in players:
                 listePseudoEnVie.remove(player.pseudo)
-            listePseudoEnVie.remove(mortLoupPseudo)
+            if(room.GetMortLoup().role != "sorc"):
+                listePseudoEnVie.remove(mortLoupPseudo)
             sio.emit('SORC', [listePseudoEnVie, mortLoupPseudo, room.potionRes, room.potionMort])
         else:
             room.tour = 'voy'
@@ -368,8 +369,20 @@ def RespJOURFIN(data):
     player.nombreVote += 1
     room.voteValide += 1
 
+    print(len(room.GetListeVivant()))
+    print(room.voteValide)
     if(len(room.GetListeVivant()) == room.voteValide):
-        
+        resultat = room.GetResultatVote()
+        max = 0
+        playersMax = []
+        for index,players in resultat.items():
+            if index > max:
+                max = index
+                playersMax = players
+        if(len(playersMax) == 1):
+            playerMort = playersMax[0]
+            sio.emit("nouveauMessage", ["MDJ", playerMort.pseudo + " a été tué par le village, il était " + libelleRole[playerMort.role] + " !"])
+            sio.emit("MORT", 1,room=playerMort.sid)
 
 @sio.on('Chat')
 def messageRecu(data):
