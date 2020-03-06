@@ -4,6 +4,7 @@
 	<title>Le pear LOUP-GAROU</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css"></link>
+	<link rel="stylesheet" type="text/css" href="sweetalert.css"></link>
 </head>
 <body>
 	<div id="Content">
@@ -85,6 +86,7 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="sweetalert.js"></script>
 	<script type="text/javascript" charset="utf-8">
 	    var io = io('http://192.168.43.9:5000');
 	    io.on('gameStarted', function(data) {
@@ -237,11 +239,13 @@
 	    	var auteur = data[0]
 	    	var textconv = data[1]
 	    	$('#Chat #Contenu').append('<p>'+auteur+' >>> '+textconv+'</p>')
+	    	$('#Chat #Contenu p:last-child').scrollIntoView();
 	    })
 	    io.on('nouveauMessageLG', function(data) {
 	    	var auteur = data[0]
 	    	var textconv = data[1]
 	    	$('#Chat #Contenu').append('<p class="messageLG">'+auteur+' >>> '+textconv+'</p>')
+	    	$('#Chat #Contenu p:last-child').scrollIntoView();
 	    })
 	    io.on('CUPI', function(data) {
 	    	var select = data
@@ -401,6 +405,12 @@
 			}
 			return false;
 		});
+	    io.on('MORT', function(data) {
+	    	swal("COUP DUR POUR LE JOUEUR FRANÇAIS !", "Tu es mort...")
+	    	$('#Decision').addClass('tmort');
+	    	$('#general.lg textarea').hide()
+			$('#general.lg input').hide()
+	    })
 	</script>
 </body>
 </html>

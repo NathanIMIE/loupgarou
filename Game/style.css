@@ -43,6 +43,7 @@ h5,h6,p,label {
     flex-direction: column;
     justify-content: flex-end;
     height: 100vh;
+    border-right: 1px solid #000;
 }
 #Chat #Contenu .messageLG {
 	display: none;
@@ -94,7 +95,6 @@ h5,h6,p,label {
 }
 #Decision {
     height: 100vh;
-    border-left: 1px solid #000;
     display: block;    
 }
 #Decision #CUPI,
@@ -195,4 +195,7 @@ h4 {
 .hovering:hover:after {
     height: 0;
     content: ''
+}
+#Decision.tmort {
+    display: none;
 }
