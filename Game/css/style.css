@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+h5,h6,p,label {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.3em;
+    color: #000;
+}
+#Content {
+    width: 500px;
+    margin: 20px auto;
+}
+.envoiName {
+    margin-top: 10px;
+    width: 150px;
+    display: block;
+    margin: 10px auto;
+}
+#listing {
+	margin-top: 10px;
+}
+#listing > p {
+    padding: 5px;
+}
+#startGame {
+    display: none;
+    margin-top: 10px;
+    width: 350px;
+    margin: 10px auto;
+}
+.alert{
+    text-align: center;
+}
+.flleft{
+    float: left;
+    display: inline-block;
+    padding: 20px;
+}
+.bottom {
+  height: 28vh;
+}
+#InfoRole {
+  width: 340px;
+}
+#Decision{
+    width: calc(100% - 1181px);
+}
+#Center {
+    height: 100vh;
+    border-right: 1px solid #000;
+}
+#Graphisme {
+    height: 468px;
+    margin: -20px -20px 0;
+    position: relative;
+}
+#Graphisme img {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+#Graphisme p {
+  display: block;
+  padding-top: 438px;
+}
+#Chat{
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: calc(100vh - 468px);
+}
+#Chat #Contenu .messageLG {
+	display: none;
+}
+#Chat #Contenu.lg .messageLG {
+	display: block;
+}
+#InfoRole {
+    height: 100vh;
+    border-right: 1px solid #000;
+    display: block;
+}
+#InfoRole img {
+  width: 100%;
+    margin: 0 auto 15px;
+    display: block;
+}
+#InfoRole h5 {
+    font-size: 18px;
+}
+#InfoRole h6 {
+    font-size: 16px;
+}
+#InfoRole p {
+    font-size: 12px;
+}
+#Chat textarea {
+    width: 75%;
+    max-height: 100px;
+    height: 100px;
+    min-height: 100px;
+}
+#Chat input[type="submit"] {
+    width: 20%;
+    padding: 0;
+    height: 30px;
+    margin: 40px 0 0 40px;
+}
+#Chat form#general {
+    height: 100px;
+}
+#Chat #Contenu {
+  padding: 15px 0;
+  height: calc(100% - 100px);
+  display: block;
+  overflow-y: scroll;
+}
+#Chat p {
+  font-size: 12px;
+}
+#Decision {
+  height: 100vh;
+  display: block;
+}
+#Decision #CUPI,
+#Decision #GARDE,
+#Decision #SORC,
+#Decision #VOY,
+#Decision #CHASS,
+#Decision #LG,
+#Decision #JOUR {
+  display: none;
+}
+#Decision.lg #CUPI,
+#Decision.lg #GARDE,
+#Decision.lg #SORC,
+#Decision.lg #VOY,
+#Decision.lg #CHASS,
+#Decision.sorc #CUPI,
+#Decision.sorc #GARDE,
+#Decision.sorc #LG,
+#Decision.sorc #VOY,
+#Decision.sorc #CHASS,
+#Decision.chass #CUPI,
+#Decision.chass #GARDE,
+#Decision.chass #LG,
+#Decision.chass #SORC,
+#Decision.chass #VOY,
+#Decision.vill #CUPI,
+#Decision.vill #GARDE,
+#Decision.vill #LG,
+#Decision.vill #SORC,
+#Decision.vill #VOY,
+#Decision.vill #CHASS,
+#Decision.voy #CUPI,
+#Decision.voy #GARDE,
+#Decision.voy #LG,
+#Decision.voy #SORC,
+#Decision.voy #CHASS,
+#Decision.cupi #GARDE,
+#Decision.cupi #LG,
+#Decision.cupi #SORC,
+#Decision.cupi #CHASS,
+#Decision.cupi #VOY,
+#Decision.gard #CUPI,
+#Decision.gard #LG,
+#Decision.gard #SORC,
+#Decision.gard #CHASS,
+#Decision.gard #VOY,
+#Decision.ange #GARDE,
+#Decision.ange #CUPI,
+#Decision.ange #LG,
+#Decision.ange #SORC,
+#Decision.ange #CHASS,
+#Decision.ange #VOY {
+    display: none!important;
+}
+h4 {
+    font-size: 18px;
+    margin: 20px 0 10px;
+    text-decoration: underline;
+}
+#InfoRole .joueursActif p {
+    font-size: 14px;
+    margin: 0 0 5px;
+}
+.joueursActif .dead {
+    text-decoration: line-through;
+}
+.joueursActif.inlove .love {
+    color: #FFC0CB;
+}
+.joueursActif p i {
+    display: none
+}
+.joueursActif.inlove .love i {
+    display: block;
+}
+#Decision {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#Decision.tmort {
+    display: none;
+}
+#Decision form {
+  width: 100%;
+}
+.row, fieldset {
+  display: block;
+  width: 100%;
+  margin: 0 0 15px;
+}
+.w50 {
+  display: inline-block;
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+.w50 input {
+  vertical-align: top;
+  height: 21px;
+}
+.w50 span {
+  margin-left: 7px;
+}
+#Decision input[type=submit] {
+  display: block;
+  width: auto;
+  float: right;
+}
+.Bienvenue {
+  display: block;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  color: #000;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: calc(72vh - 40px);
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.flip-card-front {
+  color: black;
+  height: 300px;
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+  height: auto;
+  text-align: left;
+}
